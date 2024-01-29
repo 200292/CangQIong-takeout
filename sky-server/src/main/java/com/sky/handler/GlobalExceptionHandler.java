@@ -27,6 +27,11 @@ public class GlobalExceptionHandler {
         return Result.error(ex.getMessage());
     }
 
+    /**
+     * 处理用户名重复异常
+     * @param ex
+     * @return
+     */
     @ExceptionHandler
     public Result exceptionHandler(SQLIntegrityConstraintViolationException ex){
         String message = ex.getMessage();
