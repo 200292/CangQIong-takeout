@@ -7,6 +7,10 @@ import com.aliyun.oss.OSSException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 import java.io.ByteArrayInputStream;
 
 @Data
@@ -22,9 +26,9 @@ public class AliOssUtil {
     /**
      * 文件上传
      *
-     * @param bytes
-     * @param objectName
-     * @return
+     * @param bytes 由文件对象转化而来的数组
+     * @param objectName 在阿里云oss中存储的对象名
+     * @return 上传的文件在阿里云中的存储路径
      */
     public String upload(byte[] bytes, String objectName) {
 
@@ -52,7 +56,7 @@ public class AliOssUtil {
             }
         }
 
-        //文件访问路径规则 https://BucketName.Endpoint/ObjectName
+        //在阿里云中上传后的文件访问路径规则 https://BucketName.Endpoint/ObjectName
         StringBuilder stringBuilder = new StringBuilder("https://");
         stringBuilder
                 .append(bucketName)
@@ -62,7 +66,6 @@ public class AliOssUtil {
                 .append(objectName);
 
         log.info("文件上传到:{}", stringBuilder.toString());
-
         return stringBuilder.toString();
     }
 }

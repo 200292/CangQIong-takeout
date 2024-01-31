@@ -90,7 +90,7 @@ public class CategoryController {
     }
 
     /**
-     * 根据类型查询分类
+     * 根据类型查询分类，查询所有套餐分类或者菜品分类
      * @param type
      * @return
      */
