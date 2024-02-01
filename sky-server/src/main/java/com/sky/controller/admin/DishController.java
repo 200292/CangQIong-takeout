@@ -1,10 +1,13 @@
 package com.sky.controller.admin;
 
+import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,4 +53,54 @@ public class DishController {
         dishService.deleteBatch(ids);
         return Result.success();
     }
+
+    /**
+     * 根据菜品id查询菜品及其口味
+     * @param id
+     * @return
+     */
+    @GetMapping("{id}")
+    public Result<DishVO> getByDishId(@PathVariable Long id){
+        log.info("根据菜品id查询菜品 {}",id);
+        //返回的菜品需要包含口味信息，不能直接使用菜品对象返回
+        DishVO dishVO = dishService.getWithFlavorById(id);
+        return Result.success(dishVO);
+    }
+
+    /**
+     * 修改菜品及其口味
+     * @param dishDTO
+     * @return
+     */
+    @PutMapping()
+    public Result update(@RequestBody DishDTO dishDTO){
+        log.info("修改菜品 {}",dishDTO);
+        dishService.updateWithFlavor(dishDTO);
+        return Result.success();
+    }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("list")
+    public Result<List<Dish>> getByCategoryId(Long categoryId){
+        log.info("根据分类id查询菜品 {}",categoryId);
+        List<Dish> dishes = dishService.getByCategoryId(categoryId);
+        return Result.success(dishes);
+    }
+
+    /**
+     * 起售停售菜品
+     * @param status
+     * @return
+     */
+    @PostMapping("status/{status}")
+    public Result updateStatus(@PathVariable int status,Long id){
+        log.info("修改起售停售信息,状态:{} id:{}",status,id);
+        dishService.updateStatus(status,id);
+        return Result.success();
+    }
+
 }

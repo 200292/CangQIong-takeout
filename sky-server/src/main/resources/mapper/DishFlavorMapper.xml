@@ -3,10 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sky.mapper.DishFlavorMapper">
-    <insert id="insertBetch">
+    <insert id="insertBatch">
         insert into dish_flavor(dish_id,value,name) values
         <foreach collection="flavors" item="flavor" separator=",">
              (#{flavor.dishId},#{flavor.value},#{flavor.name})
         </foreach>
     </insert>
+
+    <delete id="deleteBatchByDishId">
+        delete from dish_flavor where dish_id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
