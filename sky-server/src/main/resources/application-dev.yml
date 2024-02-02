@@ -11,3 +11,8 @@ sky:
     access-key-id: LTAI5tEwCTYP41eGhWQ5mFtJ
     bucket-name: ldy-sky-take-out
     access-key-secret: GZ6y6Uau1JSzs3SbcPQir42thmayHW
+  redis:
+    host: localhost
+    port: 6379
+    password: l518020
+    database: 1
