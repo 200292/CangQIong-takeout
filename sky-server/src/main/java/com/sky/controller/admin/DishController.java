@@ -33,7 +33,7 @@ public class DishController {
         log.info("新增菜品 {}",dishDTO);
         dishService.saveWithFlavor(dishDTO);
 
-        //清除该菜品所属分类的缓存
+        //清除该菜品所属分类的缓存,因为该分类的菜品不再是缓存中存储的几种了
         String key = "dish_" + dishDTO.getCategoryId();
         cleanCache(key);
         return Result.success();
